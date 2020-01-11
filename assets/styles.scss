@@ -1,0 +1,25 @@
+a {
+  text-decoration: none;
+}
+
+.page-title-warp {
+  display: flex;
+  align-items: start;
+}
+
+.page-title {
+  font-weight: lighter !important;
+  margin-bottom: 24px !important;;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.MuiTableRow-root.Mui-selected  {
+  background-color: #F4F6F8 !important;
+}
+
+.no-line .MuiInput-underline:before, .no-line .MuiInput-underline:after {
+  display: none;
+}
