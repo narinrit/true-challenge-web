@@ -33,7 +33,6 @@ class MyApp extends App {
 
             if (isServer) {
                 // Forward header from real client request
-                if (req.headers.host) headers.host = req.headers.host;
                 if (req.headers.cookie) headers.cookie = req.headers.cookie;
                 if (req.headers.referer) headers.referer = req.headers.referer;
                 if (req.headers['user-agent']) headers['user-agent'] = req.headers['user-agent'];
