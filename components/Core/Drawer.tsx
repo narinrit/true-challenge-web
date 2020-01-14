@@ -9,9 +9,9 @@ import {
     Theme,
     useMediaQuery,
 } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
 import CategoryIcon from '@material-ui/icons/Category';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -138,7 +138,7 @@ const CoreDrawer: React.FunctionComponent<Props> = (props) => {
                         <ListItemIcon className={classes.listItemIcon}>
                             <ExitToAppIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Logout" />
+                        <ListItemText primary="Sign Out" />
                     </ListItem>
                 </div>
             </List>
