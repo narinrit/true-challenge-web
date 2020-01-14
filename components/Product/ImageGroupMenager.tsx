@@ -1,11 +1,11 @@
 import {
-    Card, CardActionArea, Fab, Grid, makeStyles,
+    Card, CardActionArea, Fab, Grid, makeStyles, Dialog,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { openSnackbar } from '../../store/view/actions';
 import publicRuntimeConfig from '../../utils/publicRuntimeConfig';
@@ -105,25 +105,40 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
         setImages(_.filter(images, (image: any) => image.id !== id));
     };
 
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogImage, setDialogImage] = useState(null as any);
+
+    const handleOpenDialog = (image) => (event) => {
+        event.preventDefault();
+        setDialogImage(image);
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
+
     return (
         <Grid container spacing={3}>
             {images.map((image) => (
                 <Grid
-                    key={image}
+                    key={image.id}
                     item
                     xs={6}
                     sm={3}
                     lg={2}
                 >
                     <Card className={classes.card}>
-                        <CardActionArea className={classes.cardContent}>
-                            <div
-                                className={classes.squareImage}
-                                style={{
-                                    backgroundImage: `url("${image.normalUrl}")`,
-                                }}
-                            />
-                        </CardActionArea>
+                        <a href={image.originalUrl} onClick={handleOpenDialog(image)}>
+                            <CardActionArea className={classes.cardContent}>
+                                <div
+                                    className={classes.squareImage}
+                                    style={{
+                                        backgroundImage: `url("${image.normalUrl}")`,
+                                    }}
+                                />
+                            </CardActionArea>
+                        </a>
                         <div className={classes.cardContentMenu}>
                             <Fab
                                 size="small"
@@ -167,6 +182,18 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
                 style={{ display: 'none' }}
                 onChange={handleChangeFile}
             />
+
+            <Dialog
+                open={dialogOpen}
+                onClose={handleCloseDialog}
+                onClick={handleCloseDialog}
+            >
+                <img
+                    src={!!dialogImage && dialogImage.originalUrl}
+                    width="100%"
+                    alt=""
+                />
+            </Dialog>
         </Grid>
     );
 };
