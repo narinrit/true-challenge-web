@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import validate from 'validate.js';
 import { openSnackbar } from '../../store/view/actions';
 import publicRuntimeConfig from '../../utils/publicRuntimeConfig';
+import ImageGroupManger from './ImageGroupMenager';
 
 const { API_URL } = publicRuntimeConfig;
 
@@ -103,6 +104,8 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
 
     const hasError = (field) => !!errors && !!errors[field];
     const errorMessage = (field) => (hasError(field) ? errors[field][0] : null);
+
+    const [images, setImages] = useState([]);
 
     return (
         <>
@@ -219,6 +222,20 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
                                 variant="outlined"
                                 type="number"
                             />
+                        </Grid>
+                        <Grid
+                            item
+                            xs={12}
+                        >
+                            <Typography variant="subtitle1">
+                                Images
+                            </Typography>
+                        </Grid>
+                        <Grid
+                            item
+                            xs={12}
+                        >
+                            <ImageGroupManger images={images} setImages={setImages} />
                         </Grid>
                     </Grid>
                 </CardContent>
