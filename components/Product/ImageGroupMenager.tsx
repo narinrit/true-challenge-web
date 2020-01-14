@@ -113,7 +113,7 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
                     item
                     xs={6}
                     sm={3}
-                    md={2}
+                    lg={2}
                 >
                     <Card className={classes.card}>
                         <CardActionArea className={classes.cardContent}>
@@ -140,7 +140,7 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
                 item
                 xs={6}
                 sm={3}
-                md={2}
+                lg={2}
             >
                 <Card>
                     <CardActionArea

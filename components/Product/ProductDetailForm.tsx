@@ -51,6 +51,7 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
         quantity: 10,
         price: 99,
         shipmentDays: 3,
+        images: [],
         ...data,
     });
 
@@ -59,6 +60,13 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
             ...values,
             [event.target.name]: event.target.value,
         });
+    };
+
+    const setImages = (newImages) => {
+        setValues((oldValue) => ({
+            ...oldValue,
+            images: newImages,
+        }));
     };
 
     const saveData = () => {
@@ -104,8 +112,6 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
 
     const hasError = (field) => !!errors && !!errors[field];
     const errorMessage = (field) => (hasError(field) ? errors[field][0] : null);
-
-    const [images, setImages] = useState([]);
 
     return (
         <>
@@ -235,7 +241,7 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
                             item
                             xs={12}
                         >
-                            <ImageGroupManger images={images} setImages={setImages} />
+                            <ImageGroupManger images={values.images} setImages={setImages} />
                         </Grid>
                     </Grid>
                 </CardContent>
