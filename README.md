@@ -3,6 +3,13 @@
 This project was created for this challenge.
 https://rightman.true-e-logistics.com/full-stack/fullstack-challenge.html
 
+## Stack
+- Next.js
+- Typescript
+- React and Hooks
+- Redux with thunk
+- Material-UI
+
 ## How to setup
 Required backend restful api: https://github.com/narinrit/true-challenge-api
 
