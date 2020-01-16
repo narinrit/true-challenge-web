@@ -26,9 +26,7 @@ const UserEditPage: NextPage<Props> = (props) => {
     ];
 
     return (
-        <DefaultLayout>
-            <CoreBreadcrumb items={breadcrumbs} />
-
+        <DefaultLayout breadcrumbs={breadcrumbs}>
             <Typography className="page-title" variant="h2" gutterBottom>
                 Product &quot;
                 {data.name}

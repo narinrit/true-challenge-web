@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 import { NextPage } from 'next';
 import React from 'react';
-import CoreBreadcrumb from '../../components/Core/Breadcrumb';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import ProductDetailForm from '../../components/Product/ProductDetailForm';
 import redirectIfNotAuth from '../../middlewares/redirectIfNotAuth';
@@ -19,9 +18,7 @@ const breadcrumbs = [
 ];
 
 const UserCreatePage: NextPage = () => (
-    <DefaultLayout>
-        <CoreBreadcrumb items={breadcrumbs} />
-
+    <DefaultLayout breadcrumbs={breadcrumbs}>
         <Typography className="page-title" variant="h2" gutterBottom>Create new product</Typography>
         <Grid container spacing={3}>
             <Grid item xs={12}>

@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
+import Breadcrumb from '../Core/Breadcrumb';
 import Drawer from '../Core/Drawer';
 import Header from '../Core/Header';
 
@@ -15,12 +16,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Props = {
-    classes: any;
+    classes?: any;
     children?: any;
+    breadcrumbs?: any[];
 };
 
-const DefaultLayout: React.FunctionComponent = (props: Props) => {
-    const { children } = props;
+const DefaultLayout: React.FunctionComponent<Props> = (props) => {
+    const { children, breadcrumbs } = props;
     const classes = useStyles(props);
 
     return (
@@ -29,6 +31,9 @@ const DefaultLayout: React.FunctionComponent = (props: Props) => {
             <Drawer />
             <div className={classes.content}>
                 <div className={classes.toolbar} />
+
+                <Breadcrumb items={breadcrumbs} />
+
                 {children}
             </div>
         </div>

@@ -23,7 +23,6 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import CoreBreadcrumb from '../../components/Core/Breadcrumb';
 import FilterForm from '../../components/FilterForm';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import redirectIfNotAuth from '../../middlewares/redirectIfNotAuth';
@@ -147,9 +146,7 @@ const ProductIndexPage: NextPage<Props> = (props) => {
     };
 
     return (
-        <DefaultLayout>
-            <CoreBreadcrumb items={breadcrumbs} />
-
+        <DefaultLayout breadcrumbs={breadcrumbs}>
             <div className="page-title-warp">
                 <Typography className="page-title" variant="h2" gutterBottom>Product Management</Typography>
                 <span className="spacer" />
