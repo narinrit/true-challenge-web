@@ -33,7 +33,7 @@ const IndexPage: NextPage = () => (
             <br />
             <br />
 
-            Please click menu on the left.
+            Please click menu on the sidebar.
         </Typography>
     </DefaultLayout>
 );

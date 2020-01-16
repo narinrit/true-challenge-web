@@ -62,7 +62,6 @@ const Header: React.FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-
     return (
         <AppBar position="fixed" className={classes.root} elevation={0}>
             <HeaderProgressBar />
@@ -80,7 +79,7 @@ const Header: React.FunctionComponent<Props> = (props) => {
                 </IconButton>
                 <Link href="/" passHref>
                     <Typography component="a" variant="h4" className={classes.title}>
-                        True challenge web admin
+                        Web admin
                     </Typography>
                 </Link>
                 <span className="spacer" />
