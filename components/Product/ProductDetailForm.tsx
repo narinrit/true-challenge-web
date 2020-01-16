@@ -191,7 +191,7 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
                                 name="quantity"
                                 onChange={handleChange}
                                 required
-                                value={values.quantity || 0}
+                                value={values.quantity}
                                 variant="outlined"
                                 type="number"
                             />
@@ -210,7 +210,7 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
                                 name="price"
                                 onChange={handleChange}
                                 required
-                                value={values.price || 0}
+                                value={values.price}
                                 variant="outlined"
                                 type="number"
                             />
@@ -229,7 +229,7 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
                                 name="shipmentDays"
                                 onChange={handleChange}
                                 required
-                                value={values.shipmentDays || 0}
+                                value={values.shipmentDays}
                                 variant="outlined"
                                 type="number"
                             />
