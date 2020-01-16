@@ -104,7 +104,7 @@ class MyApp extends App {
         return (
             <>
                 <Head>
-                    <title>Back Office</title>
+                    <title>Index</title>
                 </Head>
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

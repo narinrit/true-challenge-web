@@ -1,5 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import React from 'react';
 import CoreBreadcrumb from '../../components/Core/Breadcrumb';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
@@ -25,13 +26,15 @@ const UserEditPage: NextPage<Props> = (props) => {
         },
     ];
 
+    const title = `Product "${data.name}"`;
+
     return (
         <DefaultLayout breadcrumbs={breadcrumbs}>
-            <Typography className="page-title" variant="h2" gutterBottom>
-                Product &quot;
-                {data.name}
-                &quot;
-            </Typography>
+            <Head>
+                <title>{title}</title>
+            </Head>
+
+            <Typography className="page-title" variant="h2" gutterBottom>{title}</Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <ProductDetailForm data={data} />

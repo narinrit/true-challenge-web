@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -38,6 +39,8 @@ const breadcrumbs = [
         href: '/products',
     },
 ];
+
+const title = 'Product Management';
 
 const useStyles = makeStyles((theme: Theme) => ({
     button: {
@@ -147,8 +150,12 @@ const ProductIndexPage: NextPage<Props> = (props) => {
 
     return (
         <DefaultLayout breadcrumbs={breadcrumbs}>
+            <Head>
+                <title>{title}</title>
+            </Head>
+
             <div className="page-title-warp">
-                <Typography className="page-title" variant="h2" gutterBottom>Product Management</Typography>
+                <Typography className="page-title" variant="h2" gutterBottom>{title}</Typography>
                 <span className="spacer" />
                 <Link href="/products/create" passHref>
                     <Button
