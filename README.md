@@ -11,7 +11,7 @@ https://rightman.true-e-logistics.com/full-stack/fullstack-challenge.html
 - Material-UI
 
 ## How to setup
-Required backend restful api: https://github.com/narinrit/true-challenge-api
+Require backend restful api: https://github.com/narinrit/true-challenge-api
 
 ``` bash
 # install dependencies
