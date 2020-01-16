@@ -73,6 +73,11 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
         const method = values.id ? 'put' : 'post';
         const url = values.id ? `/products/${values.id}` : '/products';
 
+        openSnackbarAction({
+            color: 'info',
+            message: 'Saving...',
+        });
+
         axios({
             method,
             url,
