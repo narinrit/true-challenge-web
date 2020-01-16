@@ -1,6 +1,16 @@
 import {
-    AppBar, Button, IconButton, makeStyles, Menu, MenuItem, Theme, Toolbar, Typography,
+    AppBar,
+    Button,
+    IconButton,
+    ListItemIcon,
+    makeStyles,
+    Menu,
+    MenuItem,
+    Theme,
+    Toolbar,
+    Typography,
 } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 import React from 'react';
@@ -10,7 +20,6 @@ import { AuthState } from '../../store/auth/types';
 import { AppState } from '../../store/types';
 import { setDrawerOpen } from '../../store/view/actions';
 import HeaderProgressBar from './HeaderProgressBar';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -24,6 +33,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     title: {
         color: 'white',
+    },
+    menuItem: {
+        paddingRight: theme.spacing(4),
+    },
+    listItemIcon: {
+        minWidth: theme.spacing(5),
     },
 }));
 
@@ -86,7 +101,18 @@ const Header: React.FunctionComponent<Props> = (props) => {
                             open={Boolean(anchorEl)}
                             onClose={handleCloseMenu}
                         >
-                            <MenuItem onClick={() => { handleCloseMenu(); signOutAction(); }}>Sign Out</MenuItem>
+                            <MenuItem
+                                className={classes.menuItem}
+                                onClick={() => {
+                                    handleCloseMenu();
+                                    signOutAction();
+                                }}
+                            >
+                                <ListItemIcon className={classes.listItemIcon}>
+                                    <ExitToAppIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography>Sign Out</Typography>
+                            </MenuItem>
                         </Menu>
                     </div>
                 ) : (
