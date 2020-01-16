@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
 import { NextPage } from 'next';
 import React from 'react';
+import CoreBreadcrumb from '../../components/Core/Breadcrumb';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import ProductDetailForm from '../../components/Product/ProductDetailForm';
 import redirectIfNotAuth from '../../middlewares/redirectIfNotAuth';
@@ -13,8 +14,21 @@ type Props = {
 const UserEditPage: NextPage<Props> = (props) => {
     const { data } = props;
 
+    const breadcrumbs = [
+        {
+            text: 'Products',
+            href: '/products',
+        },
+        {
+            text: data.name,
+            href: `/products/${data.id}`,
+        },
+    ];
+
     return (
         <DefaultLayout>
+            <CoreBreadcrumb items={breadcrumbs} />
+
             <Typography className="page-title" variant="h2" gutterBottom>
                 Product &quot;
                 {data.name}
