@@ -11,12 +11,30 @@ const IndexPage: NextPage = () => (
         <Typography variant="body1">
             This project was created for the challenge:
             <br />
-            <a href="https://rightman.true-e-logistics.com/full-stack/fullstack-challenge.html">
+            <a href="https://rightman.true-e-logistics.com/full-stack/fullstack-challenge.html" target="_blank" rel="noopener noreferrer">
                 https://rightman.true-e-logistics.com/full-stack/fullstack-challenge.html
             </a>
+            <br />
+            <br />
+
+            Backend source code:
+            <br />
+            <a href="https://github.com/narinrit/true-challenge-api" target="_blank" rel="noopener noreferrer">
+                https://github.com/narinrit/true-challenge-api
+            </a>
+            <br />
+            <br />
+
+            Frontend source code:
+            <br />
+            <a href="https://github.com/narinrit/true-challenge-web" target="_blank" rel="noopener noreferrer">
+                https://github.com/narinrit/true-challenge-web
+            </a>
+            <br />
+            <br />
+
+            Please click menu on the left.
         </Typography>
-        <br />
-        <Typography variant="body1">Please click menu on the left.</Typography>
     </DefaultLayout>
 );
 
