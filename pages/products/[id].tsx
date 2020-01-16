@@ -2,7 +2,6 @@ import { Grid, Typography } from '@material-ui/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import CoreBreadcrumb from '../../components/Core/Breadcrumb';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import ProductDetailForm from '../../components/Product/ProductDetailForm';
 import redirectIfNotAuth from '../../middlewares/redirectIfNotAuth';
@@ -22,7 +21,8 @@ const UserEditPage: NextPage<Props> = (props) => {
         },
         {
             text: data.name,
-            href: `/products/${data.id}`,
+            href: '/products[id]',
+            as: `/products/${data.id}`,
         },
     ];
 

@@ -19,11 +19,15 @@ const CoreBreadcrumb: React.FunctionComponent<Props> = (props) => {
     return (
         <Breadcrumbs className={classes.root}>
             <Link href="/">
-                Home
+                <a>Home</a>
             </Link>
             {items.map((item) => (
-                <Link key={item.href} href={item.href}>
-                    {item.text}
+                <Link
+                    key={item.href}
+                    href={item.href}
+                    as={item.as}
+                >
+                    <a>{item.text}</a>
                 </Link>
             ))}
         </Breadcrumbs>
