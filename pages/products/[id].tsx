@@ -21,7 +21,7 @@ const UserEditPage: NextPage<Props> = (props) => {
         },
         {
             text: data.name,
-            href: '/products[id]',
+            href: '/products/[id]',
             as: `/products/${data.id}`,
         },
     ];
