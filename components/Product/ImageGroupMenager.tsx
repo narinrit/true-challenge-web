@@ -46,6 +46,10 @@ const useStyles = makeStyles(() => ({
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
     },
+    dialogImage: {
+        maxWidth: '90vw',
+        maxHeight: '90vh',
+    },
 }));
 
 type Props = {
@@ -187,10 +191,11 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
                 open={dialogOpen}
                 onClose={handleCloseDialog}
                 onClick={handleCloseDialog}
+                maxWidth="xl"
             >
                 <img
+                    className={classes.dialogImage}
                     src={!!dialogImage && dialogImage.originalUrl}
-                    width="100%"
                     alt=""
                 />
             </Dialog>
