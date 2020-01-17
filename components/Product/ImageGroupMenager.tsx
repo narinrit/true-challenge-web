@@ -1,12 +1,12 @@
 import {
-    Card, CardActionArea, Fab, Grid, makeStyles, Dialog,
+    Card, CardActionArea, Dialog, Fab, Grid, makeStyles,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import _ from 'lodash';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { openSnackbar } from '../../store/view/actions';
 import publicRuntimeConfig from '../../utils/publicRuntimeConfig';
 
@@ -56,14 +56,14 @@ type Props = {
     classes?: any;
     images: any[];
     setImages: any;
-    openSnackbarAction?: typeof openSnackbar;
 };
 
 const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
-    const { images, setImages, openSnackbarAction } = props;
+    const { images, setImages } = props;
     const classes = useStyles(props);
+    const dispatch = useDispatch();
 
-    let inputRef = null;
+    const inputRef = useRef(null);
 
     const uploadFile = (file) => {
         const formData = new FormData();
@@ -82,17 +82,17 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
     };
 
     const handleChangeFile = async () => {
-        if (!inputRef.files.length) return;
+        if (!inputRef.current.files.length) return;
 
-        openSnackbarAction({
+        dispatch(openSnackbar({
             color: 'info',
             message: 'Uploading...',
-        });
+        }));
 
         const newImages = [];
 
         // eslint-disable-next-line no-restricted-syntax
-        for await (const file of inputRef.files) {
+        for await (const file of inputRef.current.files) {
             const image = await uploadFile(file);
             newImages.push(image);
         }
@@ -102,7 +102,7 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
             ...newImages,
         ]);
 
-        openSnackbarAction('Upload success.');
+        dispatch(openSnackbar('Upload success.'));
     };
 
     const handleDelete = (id) => () => {
@@ -165,7 +165,7 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
                     <CardActionArea
                         className={classes.cardContent}
                         onClick={() => {
-                            inputRef.click();
+                            inputRef.current.click();
                         }}
                     >
                         <div className={classes.square} />
@@ -177,9 +177,7 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
             </Grid>
 
             <input
-                ref={(c) => {
-                    inputRef = c;
-                }}
+                ref={inputRef}
                 type="file"
                 multiple
                 accept="image/*"
@@ -203,9 +201,4 @@ const ImageGroupManger: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapDispatchToProps = {
-    openSnackbarAction: openSnackbar,
-};
-
-// @ts-ignore
-export default connect(null, mapDispatchToProps)(ImageGroupManger);
+export default ImageGroupManger;

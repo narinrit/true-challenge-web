@@ -4,7 +4,7 @@ import {
 import { NextPage } from 'next';
 import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import validate from 'validate.js';
 import { signIn } from '../store/auth/actions';
 import { NextPageContextWithStore } from '../store/types';
@@ -69,14 +69,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type Props = {
-    signInAction?: typeof signIn;
-    openSnackbarAction?: typeof openSnackbar;
-};
-
-const SignInPage: NextPage<Props> = (props) => {
+const SignInPage: NextPage = (props) => {
     const classes = useStyles(props);
-    const { openSnackbarAction } = props;
+    const dispatch = useDispatch();
 
     const [formState, setFormState] = useState({
         isValid: false,
@@ -120,14 +115,14 @@ const SignInPage: NextPage<Props> = (props) => {
     const handleSignIn = async (event) => {
         event.preventDefault();
 
-        const isAuth = await props.signInAction(formState.values);
+        const isAuth = await dispatch(signIn(formState.values));
         if (isAuth) {
             Router.push('/');
         } else {
-            openSnackbarAction({
+            dispatch(openSnackbar({
                 message: 'Username or password is incorrect.',
                 color: 'error',
-            });
+            }));
         }
     };
 
@@ -207,12 +202,4 @@ SignInPage.getInitialProps = async ({ store, res }: NextPageContextWithStore) =>
     return {};
 };
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = {
-    signInAction: signIn,
-    openSnackbarAction: openSnackbar,
-};
-
-// @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);
+export default SignInPage;

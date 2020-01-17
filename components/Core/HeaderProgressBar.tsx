@@ -1,7 +1,7 @@
 import { LinearProgress, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppState } from '../../store/types';
 
 const useStyles = makeStyles({
@@ -19,13 +19,10 @@ const useStyles = makeStyles({
     },
 });
 
-type Props = {
-    loading: boolean;
-};
-
-const HeaderProgressBar: React.FunctionComponent<Props> = (props) => {
+const HeaderProgressBar: React.FunctionComponent = (props) => {
     const classes = useStyles(props);
-    const { loading } = props;
+
+    const loading = useSelector<AppState, boolean>((state) => state.view.loading);
 
     const className = clsx([
         classes.root,
@@ -34,6 +31,4 @@ const HeaderProgressBar: React.FunctionComponent<Props> = (props) => {
     return <LinearProgress className={className} />;
 };
 
-const mapStateToProps = ({ view }: AppState) => ({ loading: view.loading });
-
-export default connect(mapStateToProps)(HeaderProgressBar);
+export default HeaderProgressBar;

@@ -15,9 +15,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import Link, { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../../store/auth/actions';
-import { AuthState } from '../../store/auth/types';
 import { AppState } from '../../store/types';
 import { setDrawerOpen } from '../../store/view/actions';
 
@@ -57,19 +56,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type Props = {
-    auth: AuthState;
-    open: boolean;
-    setDrawerOpenAction: typeof setDrawerOpen;
-    signOutAction: typeof signOut;
-};
-
-const CoreDrawer: React.FunctionComponent<Props> = (props) => {
+const CoreDrawer: React.FunctionComponent = (props) => {
     const router = useRouter();
     const classes = useStyles(props);
-    const {
-        open, setDrawerOpenAction, signOutAction,
-    } = props;
+    const dispatch = useDispatch();
+
+    const open = useSelector<AppState, boolean>((state) => state.view.drawerOpen);
 
     const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
@@ -87,8 +79,16 @@ const CoreDrawer: React.FunctionComponent<Props> = (props) => {
         icon: CategoryIcon,
     });
 
+    const handleCloseDrawer = () => {
+        dispatch(setDrawerOpen(false));
+    };
+
     const onClickLink = () => {
-        setDrawerOpenAction(false);
+        dispatch(setDrawerOpen(false));
+    };
+
+    const handleSignOut = () => {
+        dispatch(signOut());
     };
 
     return (
@@ -99,9 +99,7 @@ const CoreDrawer: React.FunctionComponent<Props> = (props) => {
                 paper: classes.drawerPaper,
             }}
             open={open}
-            onClose={() => {
-                setDrawerOpenAction(false);
-            }}
+            onClose={handleCloseDrawer}
         >
             <div className={classes.toolbar} />
             {!!items.length && (
@@ -133,7 +131,7 @@ const CoreDrawer: React.FunctionComponent<Props> = (props) => {
                     <ListItem
                         className={classes.listItem}
                         button
-                        onClick={signOutAction}
+                        onClick={handleSignOut}
                     >
                         <ListItemIcon className={classes.listItemIcon}>
                             <ExitToAppIcon />
@@ -146,12 +144,4 @@ const CoreDrawer: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapStateToProps = ({ auth, view }: AppState) => ({ auth, open: view.drawerOpen });
-
-const mapDispatchToProps = {
-    setDrawerOpenAction: setDrawerOpen,
-    signOutAction: signOut,
-};
-
-// @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(CoreDrawer);
+export default CoreDrawer;

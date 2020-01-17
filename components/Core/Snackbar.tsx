@@ -1,7 +1,6 @@
 import {
     colors, IconButton, makeStyles, Snackbar, SnackbarContent, Theme,
 } from '@material-ui/core';
-
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -9,10 +8,10 @@ import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
 import clsx from 'clsx';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../store/types';
 import { closeSnackbar } from '../../store/view/actions';
-import { ViewState } from '../../store/view/types';
+import { SnackbarState } from '../../store/view/types';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -47,20 +46,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type Props = {
-    view: ViewState;
-    closeSnackbarAction: typeof closeSnackbar;
-};
-
-const CoreSnackbar: React.FunctionComponent<Props> = (props) => {
+const CoreSnackbar: React.FunctionComponent = (props) => {
     const classes = useStyles(props);
-    const { view, closeSnackbarAction } = props;
-    const { open, message, color } = view.snackbar;
+    const dispatch = useDispatch();
+
+    const snackbar = useSelector<AppState, SnackbarState>((state) => state.view.snackbar);
+
+    const { open, message, color } = snackbar;
 
     const Icon = variantIcon[color];
 
     const handleClose = () => {
-        closeSnackbarAction();
+        dispatch(closeSnackbar());
     };
 
     return (
@@ -92,10 +89,4 @@ const CoreSnackbar: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapStateToProps = ({ view }: AppState) => ({ view });
-
-const mapDispatchToProps = {
-    closeSnackbarAction: closeSnackbar,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoreSnackbar);
+export default CoreSnackbar;

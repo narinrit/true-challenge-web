@@ -4,7 +4,7 @@ import {
 import axios from 'axios';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import validate from 'validate.js';
 import { openSnackbar } from '../../store/view/actions';
 import publicRuntimeConfig from '../../utils/publicRuntimeConfig';
@@ -37,11 +37,12 @@ const schema = {
 
 type Props = {
     data?: any;
-    openSnackbarAction?: typeof openSnackbar;
 };
 
 const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
-    const { data, openSnackbarAction } = props;
+    const dispatch = useDispatch();
+
+    const { data } = props;
 
     const [errors, setErrors] = useState(undefined);
     const [values, setValues] = useState({
@@ -73,10 +74,10 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
         const method = values.id ? 'put' : 'post';
         const url = values.id ? `/products/${values.id}` : '/products';
 
-        openSnackbarAction({
+        dispatch(openSnackbar({
             color: 'info',
             message: 'Saving...',
-        });
+        }));
 
         axios({
             method,
@@ -91,20 +92,20 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
         }).then((response) => {
             const { code, message } = response.data;
             if (code === '00') {
-                openSnackbarAction('Save success.');
+                dispatch(openSnackbar('Save success.'));
                 Router.push('/products');
             } else {
-                openSnackbarAction({
+                dispatch(openSnackbar({
                     color: 'warning',
                     message: `Save fail: [${code}] ${message}`,
-                });
+                }));
             }
         }).catch((error) => {
             const { message } = error.response.data;
-            openSnackbarAction({
+            dispatch(openSnackbar({
                 message: `Save fail: ${message}`,
                 color: 'error',
-            });
+            }));
         });
     };
 
@@ -266,9 +267,4 @@ const ProductDetailForm: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapDispatchToProps = {
-    openSnackbarAction: openSnackbar,
-};
-
-// @ts-ignore
-export default connect(null, mapDispatchToProps)(ProductDetailForm);
+export default ProductDetailForm;

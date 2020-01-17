@@ -23,7 +23,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FilterForm from '../../components/FilterForm';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import redirectIfNotAuth from '../../middlewares/redirectIfNotAuth';
@@ -59,13 +59,14 @@ type Order = 'asc' | 'desc';
 
 type Props = {
     data: any;
-    openSnackbarAction?: typeof openSnackbar;
 };
 
 const ProductIndexPage: NextPage<Props> = (props) => {
     const router = useRouter();
     const classes = useStyles(props);
-    const { data, openSnackbarAction } = props;
+    const dispatch = useDispatch();
+
+    const { data } = props;
     const { data: items } = data;
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -89,23 +90,23 @@ const ProductIndexPage: NextPage<Props> = (props) => {
         }).then((response) => {
             const { code, message } = response.data;
             if (code === '00') {
-                openSnackbarAction();
+                dispatch(openSnackbar());
                 Router.push({
                     pathname: Router.pathname,
                     query: Router.query,
                 }, Router.asPath);
             } else {
-                openSnackbarAction({
+                dispatch(openSnackbar({
                     color: 'warning',
                     message: `Cannot delete this product: [${code}] ${message}`,
-                });
+                }));
             }
         }).catch((error) => {
             const { message } = error.response.data;
-            openSnackbarAction({
+            dispatch(openSnackbar({
                 message: `Fail to delete: ${message}`,
                 color: 'error',
-            });
+            }));
         }).finally(() => {
             setDeleteDialogOpen(false);
         });
@@ -286,9 +287,4 @@ ProductIndexPage.getInitialProps = async (ctx: NextPageContextWithStore) => {
     return { data };
 };
 
-const mapDispatchToProps = {
-    openSnackbarAction: openSnackbar,
-};
-
-// @ts-ignore
-export default connect(null, mapDispatchToProps)(ProductIndexPage);
+export default ProductIndexPage;

@@ -14,7 +14,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../../store/auth/actions';
 import { AuthState } from '../../store/auth/types';
 import { AppState } from '../../store/types';
@@ -42,17 +42,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type Props = {
-    auth: AuthState;
-    setDrawerOpenAction: typeof setDrawerOpen;
-    signOutAction: typeof signOut;
-};
-
-const Header: React.FunctionComponent<Props> = (props) => {
+const Header: React.FunctionComponent = (props) => {
     const classes = useStyles(props);
-    const { auth, setDrawerOpenAction, signOutAction } = props;
+    const dispatch = useDispatch();
+
+    const auth = useSelector<AppState, AuthState>((state) => state.auth);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleOpenDrawer = () => {
+        dispatch(setDrawerOpen(true));
+    };
 
     const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -60,6 +60,11 @@ const Header: React.FunctionComponent<Props> = (props) => {
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
+    };
+
+    const handleSignOut = () => {
+        handleCloseMenu();
+        dispatch(signOut());
     };
 
     return (
@@ -70,9 +75,7 @@ const Header: React.FunctionComponent<Props> = (props) => {
                     color="inherit"
                     aria-label="open drawer"
                     edge="start"
-                    onClick={() => {
-                        setDrawerOpenAction(true);
-                    }}
+                    onClick={handleOpenDrawer}
                     className={classes.menuButton}
                 >
                     <MenuIcon />
@@ -102,10 +105,7 @@ const Header: React.FunctionComponent<Props> = (props) => {
                         >
                             <MenuItem
                                 className={classes.menuItem}
-                                onClick={() => {
-                                    handleCloseMenu();
-                                    signOutAction();
-                                }}
+                                onClick={handleSignOut}
                             >
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <ExitToAppIcon fontSize="small" />
@@ -124,11 +124,4 @@ const Header: React.FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapStateToProps = ({ auth }: AppState) => ({ auth });
-
-const mapDispatchToProps = {
-    setDrawerOpenAction: setDrawerOpen,
-    signOutAction: signOut,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

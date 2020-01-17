@@ -6,7 +6,7 @@ export interface SnackbarState {
 
 export interface ViewState {
     loading: boolean;
-    drawerOpen: false;
+    drawerOpen: boolean;
     snackbar: SnackbarState;
 }
 
